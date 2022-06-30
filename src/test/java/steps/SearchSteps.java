@@ -7,8 +7,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import pages.WikiMainPage;
 import pages.WikiSearchPage;
 
@@ -31,7 +33,7 @@ public class SearchSteps {
         driver = new ChromeDriver();
     }
 
-    @Given("Keyword for search is {string}")
+    @Given("Keyword for search is {}")
     public void searchKeywordIsString(String keyword) {
         searchItem = keyword;
     }
@@ -56,7 +58,7 @@ public class SearchSteps {
         driver.quit();
     }
 
-    @Given("^I open Facebook URL and create new accounts with below data$")
+    @Given("^I open Facebook URL and create new accounts with below data:$")
     public void i_open_Facebook_URL_and_create_new_accounts_with_below_data(DataTable dt) {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
         for(int i=0; i<list.size(); i++) {
@@ -65,9 +67,13 @@ public class SearchSteps {
         }
     }
 
-    @Given("I see title {string} on the page")
-    public void iSeeTitleOnThePage(String arg0) {
 
+    @Then("Page with title {string} opened")
+    public void Test(String title) {
+        String actualTitle = driver.findElement(By.id("firstHeading")).getText();
+        Assert.assertEquals(title, actualTitle);
     }
+
+
 }
 
